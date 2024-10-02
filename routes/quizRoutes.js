@@ -56,15 +56,12 @@ router.post("/saveQuizResult", auth, async (req, res) => {
 router.get("/myQuizzes", auth, async (req, res) => {
 	const { id, searchKey } = req.query;
 	try {
-		const quizzes = await Quiz.find({
-			generatedByUser: id,
-			$or: [{ quizId: { $regex: searchKey, $options: "i" } }, { topic: { $regex: searchKey, $options: "i" } }],
-		});
-
 		const result = await Quiz.aggregate([
 			{
-				generatedByUser: id,
-				$or: [{ quizId: { $regex: searchKey, $options: "i" } }, { topic: { $regex: searchKey, $options: "i" } }],
+				$match: {
+					generatedByUser: id,
+					$or: [{ quizId: { $regex: searchKey, $options: "i" } }, { topic: { $regex: searchKey, $options: "i" } }],
+				},
 			},
 			{
 				$lookup: {

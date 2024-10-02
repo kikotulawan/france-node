@@ -63,6 +63,10 @@ router.get("/myQuizzes", auth, async (req, res) => {
 
 		const result = await Quiz.aggregate([
 			{
+				generatedByUser: id,
+				$or: [{ quizId: { $regex: searchKey, $options: "i" } }, { topic: { $regex: searchKey, $options: "i" } }],
+			},
+			{
 				$lookup: {
 					from: "quizresults",
 					localField: "quizId",

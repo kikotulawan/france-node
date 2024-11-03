@@ -192,7 +192,7 @@ router.post("/request-password-reset", async (req, res) => {
 						</tr>
 						<tr>
 						<td class="email-content">
-							<p>Hi there,</p>
+							<p>Hi ${user.full_name},</p>
 							<p>You recently requested to reset your password. Please use the following verification code to complete the process:</p>
 							<p class="verification-code">${verificationCode}</p>
 							<p>This code will expire after 10 minutes. If you did not request a password reset, please disregard this email.</p>
@@ -200,7 +200,7 @@ router.post("/request-password-reset", async (req, res) => {
 						</tr>
 						<tr>
 						<td class="email-footer">
-							<p>&copy; 2024 Your Company. All rights reserved.</p>
+							<p>&copy; 2024 AI Quiz Generator. All rights reserved.</p>
 						</td>
 						</tr>
 					</table>

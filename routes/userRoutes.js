@@ -165,7 +165,47 @@ router.post("/request-password-reset", async (req, res) => {
 			to: user.email,
 			text: "",
 			subject: "Password Reset Code",
-			html: `<p>Your password reset verification code is: <b>${verificationCode}</b>. This code will expire after 10 minutes.</p>`,
+			html: `<!DOCTYPE html>
+					<html lang="en">
+					<head>
+					<meta charset="UTF-8">
+					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+					<style>
+						/* Ensures padding and layout styling across email clients */
+						body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+						table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+						img { -ms-interpolation-mode: bicubic; }
+
+						/* Reset and set base styles */
+						body { margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4; color: #333333; }
+						.email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+						.email-header { font-size: 24px; font-weight: bold; text-align: center; color: #4CAF50; padding-bottom: 15px; }
+						.email-content { font-size: 16px; line-height: 1.6; color: #555555; }
+						.verification-code { font-size: 20px; color: #333333; font-weight: bold; }
+						.email-footer { font-size: 12px; text-align: center; color: #888888; margin-top: 20px; }
+					</style>
+					</head>
+					<body>
+					<table role="presentation" class="email-container">
+						<tr>
+						<td class="email-header">Password Reset Request</td>
+						</tr>
+						<tr>
+						<td class="email-content">
+							<p>Hi there,</p>
+							<p>You recently requested to reset your password. Please use the following verification code to complete the process:</p>
+							<p class="verification-code">${verificationCode}</p>
+							<p>This code will expire after 10 minutes. If you did not request a password reset, please disregard this email.</p>
+						</td>
+						</tr>
+						<tr>
+						<td class="email-footer">
+							<p>&copy; 2024 Your Company. All rights reserved.</p>
+						</td>
+						</tr>
+					</table>
+					</body>
+					</html>`,
 		});
 
 		res.json({ message: "Verification code sent to your email" });
